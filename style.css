@@ -1,0 +1,17 @@
+:root{--bg:#1a0a0d;--red:#7a0e1f;--gold:#e0a93b;--ink:#f4e9d8;--soft:#f3d9a4;--line:rgba(244,233,216,.14);--w:#2e9e63;--d:#e0a93b;--l:#c8394f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--gold)}.wrap{max-width:900px;margin:0 auto;padding:0 18px}
+header.top{background:var(--red);border-bottom:3px solid var(--gold)}header.top .wrap{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:12px 18px;flex-wrap:wrap}
+header.top a{color:var(--ink);text-decoration:none}.logo{font-weight:800;letter-spacing:.04em}.logo b{color:var(--gold)}nav a{margin-left:14px;font-size:14px}
+h1{font-size:clamp(26px,6vw,40px);line-height:1.15;margin:28px 0 6px}h2{font-size:20px;margin:30px 0 10px;color:var(--soft)}
+.meta{color:var(--soft);font-size:14px;opacity:.85}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:18px 0}
+.stat{border:1px solid var(--line);border-radius:6px;padding:10px 12px}.stat b{display:block;font-size:24px;color:var(--gold)}.stat span{font-size:12px;opacity:.75;text-transform:uppercase;letter-spacing:.08em}
+.card{border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin:14px 0;background:rgba(244,233,216,.04)}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin:16px 0}@media(max-width:600px){.filters{grid-template-columns:1fr}}
+input,select{background:#2a1216;color:var(--ink);border:1px solid var(--line);border-radius:5px;padding:11px;font-size:16px;width:100%}
+table{width:100%;border-collapse:collapse;font-size:15px}td,th{padding:9px 6px;border-bottom:1px solid var(--line);text-align:left}td.s{white-space:nowrap;font-weight:700}
+.b{display:inline-block;width:22px;text-align:center;border-radius:3px;color:#111;font-weight:800;font-size:12px}.W{background:var(--w)}.D{background:var(--d)}.L{background:var(--l)}
+.btn{display:inline-block;background:var(--gold);color:#1a0a0d;padding:9px 14px;border-radius:4px;text-decoration:none;font-weight:700;border:0;cursor:pointer;font-size:15px}
+.vid{position:relative;padding-bottom:56.25%;height:0}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.pn{display:flex;justify-content:space-between;gap:10px;margin:26px 0;font-size:14px}footer{padding:30px 0 50px;font-size:12px;opacity:.55;border-top:1px solid var(--line);margin-top:40px}
+.aff{font-size:11px;opacity:.6}
