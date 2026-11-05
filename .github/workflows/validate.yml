@@ -1,0 +1,38 @@
+
+name: Validate LaRojaFan Website
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate datasets and generated website
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate datasets
+        run: python3 validate_data.py data
+
+      - name: Build website
+        run: python3 build.py
+
+      - name: Validate generated website
+        run: python3 validate_site.py
+
+      - name: Check for unexpected generated changes
+        run: |
+          git diff --exit-code -- docs/
