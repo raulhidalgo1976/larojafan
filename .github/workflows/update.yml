@@ -1,19 +1,62 @@
+
 name: Update matches
+
 on:
-  schedule: [{cron: '0 6 * * *'}]
+  schedule:
+    - cron: '0 6 * * *'
   workflow_dispatch:
-permissions: {contents: write}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: match-data-update
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Fetch latest results and rebuild
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch and validate updated datasets
         run: |
-          for f in results goalscorers shootouts; do curl -sSfL -o data/$f.csv https://raw.githubusercontent.com/martj42/international_results/master/$f.csv; done
+          mkdir -p incoming
+          for f in results goalscorers shootouts; do
+            curl --retry 3 -fsSL \
+              -o "incoming/$f.csv" \
+              "https://raw.githubusercontent.com/martj42/international_results/master/$f.csv"
+          done
+          python3 validate_data.py incoming
+          cp incoming/*.csv data/
+
+      - name: Build and validate website
+        run: |
           python3 build.py
-      - name: Commit changes
-        run: |
-          git config user.name "match-bot"; git config user.email "bot@users.noreply.github.com"
-          git add -A
-          git diff --cached --quiet || (git commit -m "Update matches" && git push)
+          python3 validate_site.py
+
+      - name: Create review pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update Spain match datasets"
+          branch: automated/match-data-updates
+          delete-branch: true
+          title: "Data update: Spain match records"
+          body: |
+            Automated refresh of community-maintained match datasets.
+
+            Review changes before merging:
+            - Match additions and historical revisions
+            - Scorer coverage and player records
+            - Unexpected changes to historical results
+
+            Passing validation does not establish RFEF verification.
