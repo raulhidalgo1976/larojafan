@@ -8,10 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch latest results and rebuild
+      - name: Fetch and validate updated datasets
         run: |
-          for f in results goalscorers shootouts; do curl -sSfL -o data/$f.csv https://raw.githubusercontent.com/martj42/international_results/master/$f.csv; done
+          mkdir -p incoming
+          for f in results goalscorers shootouts; do
+            curl --retry 3 -fsSL -o incoming/$f.csv "https://raw.githubusercontent.com/martj42/international_results/master/$f.csv"
+          done
+          python3 validate_data.py incoming
+          cp incoming/*.csv data/
           python3 build.py
+          python3 validate_site.py
       - name: Commit changes
         run: |
           git config user.name "match-bot"; git config user.email "bot@users.noreply.github.com"
