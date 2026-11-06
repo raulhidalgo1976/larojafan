@@ -4,6 +4,7 @@ import csv, json, re, html, os, shutil, unicodedata
 from collections import defaultdict
 from datetime import date, datetime, timezone
 from urllib.parse import quote_plus
+from historical_overlay import read_merged_goals
 R = os.path.dirname(os.path.abspath(__file__)); D = R + '/data'; O = R + '/docs'
 cfg = json.load(open(R + '/config.json')); HL = json.load(open(R + '/highlights.json'))
 PHOTOS = json.load(open(R + '/player_photos.json'))
@@ -16,7 +17,8 @@ def dstr(d): return date.fromisoformat(d).strftime('%B %-d, %Y')
 rd = lambda f: csv.DictReader(open(f'{D}/{f}.csv', encoding='utf-8'))
 shoot = {(r['date'], r['home_team'], r['away_team']): r['winner'] for r in rd('shootouts')}
 goals = defaultdict(list)
-for g in rd('goalscorers'): goals[(g['date'], g['home_team'], g['away_team'])].append(g)
+for g in read_merged_goals(D, R + '/historical_corrections.csv'):
+    goals[(g['date'], g['home_team'], g['away_team'])].append(g)
 
 M = []
 for r in rd('results'):
@@ -106,7 +108,7 @@ def match_statistics(m):
 # match pages
 for m in P + [x for x in M if not x['played']]:
     vs = [x for x in P if x['opp'] == m['opp']]; r = rec(vs) if vs else None
-    gl = ''.join(f'<li>{(f"<a href=/players/{slug(g[chr(115)+chr(99)+chr(111)+chr(114)+chr(101)+chr(114)])}.html>{E(g[chr(115)+chr(99)+chr(111)+chr(114)+chr(101)+chr(114)])}</a>" if g["team"]=="Spain" and g["own_goal"]!="TRUE" else E(g["scorer"]))} {g["minute"]}\'{" (pen.)" if g["penalty"]=="TRUE" else ""}{" (o.g.)" if g["own_goal"]=="TRUE" else ""} <span class="meta">{E(g["team"])}{(" · assist: "+E(g["assist"])) if g["assist"] not in ("NA","") else ""}</span></li>' for g in m['goals'])
+    gl = ''.join(f'<li>{(f"<a href=/players/{slug(g[chr(115)+chr(99)+chr(111)+chr(114)+chr(101)+chr(114)])}.html>{E(g[chr(115)+chr(99)+chr(111)+chr(114)+chr(101)+chr(114)])}</a>" if g["team"]=="Spain" and g["own_goal"]!="TRUE" else E(g["scorer"]))} {(E(g["minute"]) + chr(39)) if g["minute"] not in ("NA", "") else ""}{" (pen.)" if g["penalty"]=="TRUE" else ""}{" (o.g.)" if g["own_goal"]=="TRUE" else ""} <span class="meta">{E(g["team"])}{(" · assist: "+E(g["assist"])) if g["assist"] not in ("NA","") else ""}</span></li>' for g in m['goals'])
     vid = f'<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/{HL[m["hkey"]]}" title="{E(title(m))} highlights" allowfullscreen loading="lazy"></iframe></div>' if m['hkey'] in HL else f'<a class="btn" href="https://www.youtube.com/results?search_query={quote_plus(f"Spain {m[chr(111)+chr(112)+chr(112)]} {m[chr(121)+chr(101)+chr(97)+chr(114)]} highlights")}" rel="nofollow">Find highlights on YouTube</a>'
     outcome = {'W': 'Spain won', 'D': 'Spain drew', 'L': 'Spain lost'}.get(m['res'], 'Upcoming')
     if m['pen']: outcome += f' ({m["pen"]} won on penalties)'
@@ -138,7 +140,7 @@ write('tournaments/index.html', 'Spain tournament history', 'Spain results by to
 # players
 for n, gs in players.items():
     write(f"players/{slug(n)}.html", f"{n}: documented Spain goals", f"Browse {len(gs)} documented goals by {n} in our match-event dataset. This is not a verified international career total.",
-          f'<h1>{E(n)}</h1><div class="player-profile">{player_photo(n)}</div><div class="stats"><div class="stat"><b>{len(gs)}</b><span>Goals in dataset</span></div></div><table>' + ''.join(f'<tr><td><a href="/match/{m["id"]}.html">{dstr(m["date"])}</a></td><td>{E(title(m))}</td><td class="meta">{g["minute"]}\'</td></tr>' for m, g in reversed(gs)) + '</table>')
+          f'<h1>{E(n)}</h1><div class="player-profile">{player_photo(n)}</div><div class="stats"><div class="stat"><b>{len(gs)}</b><span>Goals in dataset</span></div></div><table>' + ''.join(f'<tr><td><a href="/match/{m["id"]}.html">{dstr(m["date"])}</a></td><td>{E(title(m))}</td><td class="meta">{(E(g["minute"]) + chr(39)) if g["minute"] not in ("NA", "") else "Minute unavailable"}</td></tr>' for m, g in reversed(gs)) + '</table>')
 top = sorted(players.items(), key=lambda kv: -len(kv[1]))
 write('players/index.html', 'Spain goalscorer records in our dataset', 'Explore Spain goals recorded in our historical match-event dataset; counts are not verified career totals.',
       '<h1>Spain goals recorded in our dataset</h1><p class="meta">These counts reflect available event records, not verified all-time international career totals. Historical scorer coverage is incomplete.</p><table>' + ''.join(f'<tr><td>{i}</td><td><div class="player-list-name">{player_photo(n, True)} <a href="/players/{slug(n)}.html">{E(n)}</a></div></td><td class="s">{len(g)}</td></tr>' for i, (n, g) in enumerate(top[:100], 1)) + '</table>')
