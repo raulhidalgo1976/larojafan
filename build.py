@@ -9,6 +9,7 @@ R = os.path.dirname(os.path.abspath(__file__)); D = R + '/data'; O = R + '/docs'
 cfg = json.load(open(R + '/config.json')); HL = json.load(open(R + '/highlights.json'))
 PHOTOS = json.load(open(R + '/player_photos.json'))
 MATCH_STATS = json.load(open(R + '/match_stats.json'))
+MATCH_HISTORY = json.load(open(R + '/match_history.json', encoding='utf-8'))
 E = html.escape
 def slug(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode()
@@ -105,6 +106,23 @@ def match_statistics(m):
         content='<p class="meta">Detailed possession, shots, corners and foul statistics have not yet been verified for this match. Unavailable values are not zero.</p>'
     return '<section class="card"><h2>Match statistics</h2>'+content+'</section>'
 
+def historical_content(m):
+    item = MATCH_HISTORY.get(m['id'])
+    if not item or not m['played']:
+        return ''
+    out = []
+    for field, heading in [('summary', 'Match history'), ('notes', 'Historical notes')]:
+        if item.get(field):
+            out.append('<section class="card"><h2>' + heading + '</h2><p>' + E(item[field]) + '</p></section>')
+    links = []
+    for s in item.get('sources', []):
+        url, name = s.get('url', ''), s.get('name', '')
+        if url.startswith('https://') and name:
+            links.append('<li><a href="' + E(url, quote=True) + '" rel="noopener noreferrer">' + E(name) + '</a></li>')
+    if links:
+        out.append('<section class="card"><h2>Historical sources</h2><ul>' + ''.join(links) + '</ul></section>')
+    return ''.join(out)
+
 # match pages
 for m in P + [x for x in M if not x['played']]:
     vs = [x for x in P if x['opp'] == m['opp']]; r = rec(vs) if vs else None
@@ -114,6 +132,7 @@ for m in P + [x for x in M if not x['played']]:
     if m['pen']: outcome += f' ({m["pen"]} won on penalties)'
     body = f'<h1>{E(title(m))}</h1><p class="meta">{E(m["label"])} · {dstr(m["date"])} · {E(m["city"])}, {E(m["country"])}</p>'
     body += (f'<div class="card"><b>{outcome}</b>{"<ul>"+gl+"</ul>" if gl else "<p class=meta>Scorer details not available for this match.</p>"}</div>' if m['played'] else '<div class="card"><b>Upcoming fixture</b><p class="meta">Check back after the final whistle for the result, scorers and highlights.</p></div>')
+    body += historical_content(m)
     body += match_statistics(m)
     body += f'<h2>Highlights</h2>{vid}' + gear(m) + kit
     if r: body += f'<h2>Spain vs {E(m["opp"])}: head to head</h2>{statbar(r)}<p><a href="/opponent/{slug(m["opp"])}.html">Every Spain–{E(m["opp"])} match →</a></p>'

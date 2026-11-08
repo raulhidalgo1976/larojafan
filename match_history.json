@@ -1,0 +1,76 @@
+{
+  "spain-vs-denmark-1920-08-28": {
+    "summary": "Spain made its official international debut against Denmark in Brussels on 28 August 1920. Patricio Arabolaza scored the only goal of a 1–0 win.",
+    "notes": "The match took place at La Butte in Brussels. Some early accounts differ on venue details.",
+    "sources": [
+      {
+        "name": "RFEF — first international",
+        "url": "https://rfef.es/es/noticias/se-cumplen-94-anos-del-primer-partido-seleccion"
+      },
+      {
+        "name": "RFEF — match register",
+        "url": "https://rfef.es/en/selecciones/seleccion-absoluta/historia-partidos?page=39"
+      }
+    ]
+  },
+  "spain-vs-belgium-1920-08-29": {
+    "summary": "Spain lost 3–1 to hosts Belgium in the Olympic quarter-finals. Mariano Arrate scored Spain's goal from the penalty spot. Spain nevertheless continued in the tournament's consolation competition.",
+    "notes": "The 1920 tournament used an unusual medal-determination format after the main knockout rounds.",
+    "sources": [
+      {
+        "name": "RFEF — match register",
+        "url": "https://rfef.es/en/selecciones/seleccion-absoluta/historia-partidos?page=39"
+      },
+      {
+        "name": "RSSSF — match details",
+        "url": "https://rsssf.org/tableso/ol1920f-det.html"
+      }
+    ]
+  },
+  "spain-vs-sweden-1920-09-01": {
+    "summary": "Spain defeated Sweden 2–1 in Antwerp. José María Belauste and Domingo Acedo scored as Spain advanced through the consolation competition.",
+    "notes": "Historical reports disagree on the venue and goal minutes. RSSSF discusses contemporary newspaper evidence about the stadium.",
+    "sources": [
+      {
+        "name": "RFEF — match register",
+        "url": "https://rfef.es/en/selecciones/seleccion-absoluta/historia-partidos?page=39"
+      },
+      {
+        "name": "RSSSF — venue discussion",
+        "url": "https://rsssf.org/tableso/ol1920f-det.html"
+      }
+    ]
+  },
+  "spain-vs-italy-1920-09-02": {
+    "summary": "Two goals from Félix Sesúmaga gave Spain a 2–0 victory over Italy in Antwerp, keeping the team in contention for an Olympic medal.",
+    "notes": "The minute of Sesúmaga's second goal differs between historical sources; this summary deliberately omits it.",
+    "sources": [
+      {
+        "name": "RFEF — match register",
+        "url": "https://rfef.es/en/selecciones/seleccion-absoluta/historia-partidos?page=39"
+      },
+      {
+        "name": "RSSSF — match details",
+        "url": "https://rsssf.org/tableso/ol1920f-det.html"
+      }
+    ]
+  },
+  "spain-vs-netherlands-1920-09-05": {
+    "summary": "Spain beat the Netherlands 3–1 in Antwerp to secure the silver medal. Félix Sesúmaga scored twice and Rafael Moreno, known as Pichichi, added the third.",
+    "notes": "Czechoslovakia's disqualification affected the medal allocation and the consolation competition's format.",
+    "sources": [
+      {
+        "name": "RFEF — match register",
+        "url": "https://rfef.es/en/selecciones/seleccion-absoluta/historia-partidos?page=39"
+      },
+      {
+        "name": "FIFA — 1920 Olympic campaign",
+        "url": "https://inside.fifa.com/es/tournaments/mens/mensolympic/antwerp1920/news/100-anos-de-la-primera-vez-de-espana"
+      },
+      {
+        "name": "Olympedia — match record",
+        "url": "https://www.olympedia.org/results/33559"
+      }
+    ]
+  }
+}
