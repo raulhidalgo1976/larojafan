@@ -2,7 +2,10 @@
 name: Generate Historical Match Pages
 
 on:
-  workflow_dispatch:
+  push:
+    branches: 
+      - feature/historical-match-content
+    workflow_dispatch:
 
 permissions:
   contents: write
