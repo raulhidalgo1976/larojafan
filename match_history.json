@@ -72,5 +72,41 @@
         "url": "https://www.olympedia.org/results/33559"
       }
     ]
+  },
+  "spain-vs-portugal-1921-12-18": {
+    "summary": "Spain defeated Portugal 3–1 at Madrid's O'Donnell stadium on 18 December 1921, in the first senior international between the two countries. Paulino Alcántara scored twice and Meana added a headed goal from a Pagaza pass.",
+    "notes": "The RFEF describes how the early national team had limited opportunities to train together, illustrating the challenges of international football in the 1920s.",
+    "sources": [
+      {
+        "name": "RFEF — early national team history",
+        "url": "https://rfef.es/en/noticias/history-of-the-national-team-part-2-in-the-shadow-of-olympic-success-and-trying-to-maintain-an-air-of-invincibility"
+      },
+      {
+        "name": "RSSSF — Spain international results",
+        "url": "https://www.rsssf.org/tabless/span-intres.html"
+      },
+      {
+        "name": "RSSSF — Portugal–Spain match history",
+        "url": "https://www.rsssf.org/tablesp/porspares.html"
+      }
+    ]
+  },
+  "spain-vs-portugal-1923-12-16": {
+    "summary": "Spain defeated Portugal 3–0 in Seville on 16 December 1923. José Luis Zabala scored all three goals, recording the first hat-trick in Spain's senior international history.",
+    "notes": "RFEF articles disagree on the minute of Zabala's third goal (60th or 70th). The hat-trick itself is documented, but no disputed goal minute is asserted here.",
+    "sources": [
+      {
+        "name": "RFEF — first Spain international hat-trick",
+        "url": "https://rfef.es/es/noticias/te-descubrimos-quien-fue-primero-marcar-hat-trick-equipo-nacional"
+      },
+      {
+        "name": "RFEF — 1923 historical review",
+        "url": "https://rfef.es/en/noticias/a-century-ago-1923-the-year-of-zabala-and-the-first-hat-trick-of-the-spanish-national-team"
+      },
+      {
+        "name": "RSSSF — Spain international results",
+        "url": "https://www.rsssf.org/tabless/span-intres.html"
+      }
+    ]
   }
 }
